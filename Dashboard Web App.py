@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 st.set_page_config(
-    page_title="Dashboard Streamlit",
+    page_title="Income Inequality Dashboard",
     page_icon="📊",
     layout="wide"
 )
@@ -73,4 +73,5 @@ elif st.session_state.page == 'dashboard':
         on_click=set_page,
         args=('home',),
         use_container_width=True
+
     )
