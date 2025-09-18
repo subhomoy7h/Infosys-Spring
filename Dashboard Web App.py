@@ -111,7 +111,7 @@ if selected_page == "Home":
     with col1:
         st.markdown("""
             <div class="card metric-card">
-                <div class="metric-value">7+</div>
+                <div class="metric-value">5+</div>
                 <div class="metric-label">Key Metrics</div>
             </div>
         """, unsafe_allow_html=True)
@@ -159,7 +159,7 @@ elif selected_page == "About":
             <h5>Part of the Infosys Springboard Data Visualization Internship</h5>
             <p>This dashboard is a demonstration of data visualization and web application development skills. It leverages <strong>Power BI</strong> for in-depth data analysis and <strong>Streamlit</strong> to create a fully interactive and user-friendly web interface.</p>
             <p>The goal of this project is to make complex data on global income inequality accessible and understandable to a broader audience.</p>
-            <p>🔗 <strong>Connect with me:</strong> <a href="#">LinkedIn</a> | <a href="#">GitHub</a></p>
+            <p>🔗 <strong>Connect with me:</strong> <a href="https://www.linkedin.com/in/subhomoy-halder">LinkedIn</a> | <a href="https://www.github.com/subhomoy7h">GitHub</a></p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -170,7 +170,7 @@ elif selected_page == "Dashboard":
     
     st.markdown("""
         <div class="card">
-            <h3>Interactive Power BI Report</h3>
+            <h3>Global Income Inequality Dashboard</h3>
             <p>Interact with the visuals below to explore the data. Use the filters within the dashboard for a granular analysis. Full-screen mode is recommended for the best experience.</p>
         </div>
     """, unsafe_allow_html=True)
@@ -180,3 +180,4 @@ elif selected_page == "Dashboard":
     """
     
     components.html(power_bi_iframe, height=720)
+
