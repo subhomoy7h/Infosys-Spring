@@ -1,5 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
+from streamlit_option_menu import option_menu # Import the new component
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -9,25 +10,22 @@ st.set_page_config(
 )
 
 # --- CUSTOM STYLES ---
-# This CSS hides the default Streamlit menu, header, and footer, and adds a custom theme.
-# You can generate new color schemes using tools like coolors.co
 custom_css = """
     <style>
         /* Main page background */
         .stApp {
-            background-color: #f0f2f6; /* A light grey background */
+            background-color: #f0f2f6;
             color: #333333;
         }
 
-        /* Sidebar style */
-        [data-testid="stSidebar"] {
-            background-color: #ffffff;
-            border-right: 2px solid #e0e0e0;
-        }
-        
         /* Title and header colors */
         h1, h2, h3 {
             color: #005A9C; /* A professional blue color */
+        }
+        
+        /* Reduce top padding for the main content */
+        .block-container {
+            padding-top: 2rem;
         }
 
         /* Hides default Streamlit elements */
@@ -39,56 +37,59 @@ custom_css = """
 st.markdown(custom_css, unsafe_allow_html=True)
 
 
-# --- NAVIGATION SIDEBAR ---
-# Using the sidebar for navigation is a common and effective pattern for dashboards.
-st.sidebar.title("Navigation")
-# --- EDITABLE CONTENT ---
-# You can change the page names and the emojis here
-page = st.sidebar.radio("Go to", ("🏠 Home", "👤 Candidate Profile", "📊 Dashboard"))
-
+# --- TOP NAVIGATION BAR ---
+# Replaces the st.sidebar.radio from the previous version
+selected_page = option_menu(
+    menu_title=None,  # Don't show a title
+    options=["Home", "About", "Dashboard"],
+    icons=["house-fill", "person-badge-fill", "bar-chart-line-fill"],  # Bootstrap icons
+    orientation="horizontal",
+    styles={
+        "container": {"padding": "0!important", "background-color": "#FFFFFF", "border-bottom": "2px solid #E0E0E0"},
+        "icon": {"color": "#005A9C", "font-size": "20px"},
+        "nav-link": {
+            "font-size": "16px",
+            "text-align": "center",
+            "margin": "0px",
+            "--hover-color": "#F0F2F6"
+        },
+        "nav-link-selected": {"background-color": "#005A9C", "color": "#FFFFFF"},
+    }
+)
 
 # --- PAGE DISPLAY LOGIC ---
 
 # ------------------------------------------------------------------------------------------
 # HOME PAGE
 # ------------------------------------------------------------------------------------------
-if page == "🏠 Home":
+if selected_page == "Home":
     
-    # --- EDITABLE CONTENT ---
     st.title("Global Income Inequality Dashboard 🌏")
     st.markdown("### An Interactive Tool to Explore Economic Disparities")
     st.write(
         "Welcome! This dashboard provides an in-depth look at income inequality across the globe. "
-        "Use the navigation on the left to view the interactive dashboard or learn more about the author."
+        "Use the navigation at the top of the page to view the interactive dashboard or learn more about the author."
     )
-    
-    # --- EDITABLE CONTENT ---
-    # Find a good image online (e.g., from Unsplash, Pexels) and replace the URL.
     st.image(
         "https://images.unsplash.com/photo-1542744173-8e7e53415bb0", 
-        caption="Data-driven Insights" # You can change the caption text
+        caption="Data-driven Insights"
     )
 
 # ------------------------------------------------------------------------------------------
-# CANDIDATE PROFILE PAGE
+# ABOUT PAGE (Previously Candidate Profile)
 # ------------------------------------------------------------------------------------------
-elif page == "👤 Candidate Profile":
+elif selected_page == "About":
     
-    # --- EDITABLE CONTENT ---
-    st.header("Candidate Profile")
+    st.header("About the Author")
     st.divider()
 
-    # Using columns for a cleaner layout
     col1, col2 = st.columns([1, 2]) 
 
     with col1:
-        # --- PERSONALIZATION ---
         # Replace this URL with a link to your professional photo.
-        # You can upload a photo to a site like Imgur or a public GitHub repo to get a link.
         st.image("https://via.placeholder.com/250", width=250)
 
     with col2:
-        # --- EDITABLE CONTENT ---
         st.markdown("### Subhomoy Halder")
         st.markdown("##### Part of the Infosys Springboard Data Visualization Internship")
         st.write(
@@ -96,26 +97,19 @@ elif page == "👤 Candidate Profile":
             "This project is a demonstration of data visualization skills using Power BI for analysis "
             "and Streamlit for creating an interactive web application."
         )
-        
-        # --- PERSONALIZATION ---
         # Replace the '#' with your actual profile links.
         st.write("🔗 [LinkedIn](#) | 🔗 [GitHub](#)")
 
 # ------------------------------------------------------------------------------------------
 # DASHBOARD PAGE
 # ------------------------------------------------------------------------------------------
-elif page == "📊 Dashboard":
+elif selected_page == "Dashboard":
     
-    # --- EDITABLE CONTENT ---
     st.header("Interactive Power BI Dashboard")
     st.write("Interact with the visuals below to explore the data. Use the filters within the dashboard for a granular analysis.")
 
-    # --- POWER BI EMBED ---
-    # This is your Power BI iframe code. Ensure the link is correct.
     power_bi_iframe = """
         <iframe title="Dashboard 3" width="100%" height="755" src="https://app.powerbi.com/view?r=eyJrIjoiYTc1NWU0MTItMGRhZS00YjY5LWJjNWMtMjc0OWQyOTdiNWJjIiwidCI6ImNlYjVhMDZjLTY2ZjEtNGE3NC1iZDExLTVmZDEwNTQwYTVlYSJ9&pageName=8650f3g3bcc395c7c66c" frameborder="0" allowFullScreen="true"></iframe>
     """
     
-    # The `components.html` function is used to render the iframe.
-    # The height can be adjusted to best fit your dashboard's aspect ratio.
     components.html(power_bi_iframe, height=750, scrolling=True)
