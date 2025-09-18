@@ -1,59 +1,82 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from streamlit_option_menu import option_menu # Import the new component
+from streamlit_option_menu import option_menu
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
     page_title="Global Income Inequality",
-    page_icon="🌍",
+    page_icon="✨", # A more modern, abstract icon
     layout="wide"
 )
 
-# --- CUSTOM STYLES ---
+# --- PROFESSIONAL UI/UX STYLES ---
+# This CSS creates the modern, dark aesthetic of an AI startup
 custom_css = """
     <style>
-        /* Main page background */
+        /* Base app styling */
         .stApp {
-            background-color: #f0f2f6;
-            color: #333333;
+            background-color: #0f172a; /* Dark slate blue background */
+            color: #e2e8f0; /* Light slate gray text */
+            font-family: 'sans-serif';
         }
 
-        /* Title and header colors */
+        /* Titles and headers */
         h1, h2, h3 {
-            color: #005A9C; /* A professional blue color */
+            color: #38bdf8; /* Vibrant sky blue accent */
         }
         
-        /* Reduce top padding for the main content */
-        .block-container {
-            padding-top: 2rem;
+        /* Custom styling for the option menu */
+        .st-emotion-cache-13ln4jf { /* This targets the container of the option menu */
+            border-bottom: 2px solid #334155;
+        }
+
+        /* Markdown tables */
+        .stMarkdown table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures the border-radius is applied to corners */
+        }
+        .stMarkdown th {
+            background-color: #1e293b; /* Darker slate for header */
+            color: #94a3b8;
+            font-weight: bold;
+            text-align: left;
+            padding: 12px;
+        }
+        .stMarkdown td {
+            background-color: #334155; /* Lighter slate for cells */
+            color: #e2e8f0;
+            padding: 12px;
+            border-top: 1px solid #1e293b;
         }
 
         /* Hides default Streamlit elements */
         #MainMenu {visibility: hidden;}
         footer {visibility: hidden;}
         header {visibility: hidden;}
+
     </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
 
 
 # --- TOP NAVIGATION BAR ---
-# Replaces the st.sidebar.radio from the previous version
 selected_page = option_menu(
-    menu_title=None,  # Don't show a title
+    menu_title=None,
     options=["Home", "About", "Dashboard"],
-    icons=["house-fill", "person-badge-fill", "bar-chart-line-fill"],  # Bootstrap icons
+    icons=["house-door-fill", "person-fill", "clipboard-data-fill"],
     orientation="horizontal",
     styles={
-        "container": {"padding": "0!important", "background-color": "#FFFFFF", "border-bottom": "2px solid #E0E0E0"},
-        "icon": {"color": "#005A9C", "font-size": "20px"},
+        "container": {"padding": "0!important", "background-color": "#0f172a"},
+        "icon": {"color": "#e2e8f0", "font-size": "20px"},
         "nav-link": {
             "font-size": "16px",
             "text-align": "center",
             "margin": "0px",
-            "--hover-color": "#F0F2F6"
+            "--hover-color": "#1e293b"
         },
-        "nav-link-selected": {"background-color": "#005A9C", "color": "#FFFFFF"},
+        "nav-link-selected": {"background-color": "#38bdf8", "color": "#0f172a", "font-weight": "bold"},
     }
 )
 
@@ -64,41 +87,51 @@ selected_page = option_menu(
 # ------------------------------------------------------------------------------------------
 if selected_page == "Home":
     
-    st.title("Global Income Inequality Dashboard 🌏")
-    st.markdown("### An Interactive Tool to Explore Economic Disparities")
-    st.write(
-        "Welcome! This dashboard provides an in-depth look at income inequality across the globe. "
-        "Use the navigation at the top of the page to view the interactive dashboard or learn more about the author."
+    st.title("Understanding Income Inequality 💡")
+    st.markdown(
+        "Income inequality refers to the uneven distribution of income within a population. "
+        "Below are some of the key metrics used globally to measure and understand these disparities."
     )
-    st.image(
-        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0", 
-        caption="Data-driven Insights"
-    )
+    st.divider()
+
+    # --- EDITABLE CONTENT: TABLE OF METRICS ---
+    # The table is created using Markdown for better styling and control.
+    table_data = """
+| Measure                 | Explanation                                                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Gini Coefficient** | The most common metric, ranging from 0 (perfect equality) to 1 (perfect inequality). It measures the dispersion of income distribution.       |
+| **Decile Ratios** | Compares the income of the richest 10% of the population to the poorest 10%. A high ratio indicates significant disparity.                      |
+| **Poverty Line** | A minimum income threshold below which an individual or household is considered to be in poverty. This can be absolute or relative.            |
+| **Headcount Ratio** | The percentage of a country's population living below the established Poverty Line. It measures the prevalence of poverty.                    |
+| **Poverty Gap Index** | Measures the intensity of poverty by calculating the average distance of the poor's income from the poverty line.                               |
+| **Watts Index** | A poverty measure that is sensitive to the distribution of income among the poor, giving more weight to the poorest individuals.              |
+| **PPP (Purchasing Power Parity)** | An economic theory used to adjust income figures across countries. It accounts for differences in the cost of living to allow for a more accurate comparison. |
+    """
+    st.markdown(table_data, unsafe_allow_html=True)
 
 # ------------------------------------------------------------------------------------------
-# ABOUT PAGE (Previously Candidate Profile)
+# ABOUT PAGE
 # ------------------------------------------------------------------------------------------
 elif selected_page == "About":
     
-    st.header("About the Author")
+    st.header("About This Project")
     st.divider()
 
-    col1, col2 = st.columns([1, 2]) 
+    # --- EDITABLE CONTENT: ABOUT TEXT (IMAGE REMOVED) ---
+    st.markdown(
+        """
+        ### Subhomoy Halder
+        ##### *Part of the Infosys Springboard Data Visualization Internship*
 
-    with col1:
-        # Replace this URL with a link to your professional photo.
-        st.image("https://via.placeholder.com/250", width=250)
+        This dashboard is a demonstration of data visualization and web application development skills. 
+        It leverages **Power BI** for in-depth data analysis and **Streamlit** to create a fully interactive and user-friendly web interface.
 
-    with col2:
-        st.markdown("### Subhomoy Halder")
-        st.markdown("##### Part of the Infosys Springboard Data Visualization Internship")
-        st.write(
-            "Passionate about leveraging data to uncover insights and tell compelling stories. "
-            "This project is a demonstration of data visualization skills using Power BI for analysis "
-            "and Streamlit for creating an interactive web application."
-        )
-        # Replace the '#' with your actual profile links.
-        st.write("🔗 [LinkedIn](#) | 🔗 [GitHub](#)")
+        The goal of this project is to make complex data on global income inequality accessible and understandable to a broader audience.
+
+        🔗 **Connect with me:** [LinkedIn](#) | [GitHub](#)
+        """,
+        unsafe_allow_html=True # Allows rendering of links
+    )
 
 # ------------------------------------------------------------------------------------------
 # DASHBOARD PAGE
